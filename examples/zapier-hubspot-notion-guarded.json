@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "name": "Guarded Zapier HubSpot and Notion Sync",
+  "seed": {
+    "resource": "hubspot/deals",
+    "event": "stage_changed",
+    "data": {
+      "deal_id": "deal-9812",
+      "stage": "closed_won",
+      "sync_source": "sales_rep"
+    }
+  },
+  "workflows": [
+    {
+      "id": "hubspot-to-notion",
+      "name": "Zapier: Sync HubSpot deal changes to Notion database",
+      "on": {
+        "resource": "hubspot/deals",
+        "event": "stage_changed"
+      },
+      "emit": [
+        {
+          "resource": "notion/database_pages",
+          "event": "page_updated",
+          "set": {
+            "sync_source": "zapier_sync"
+          }
+        }
+      ],
+      "when": [
+        {
+          "field": "sync_source",
+          "op": "notEquals",
+          "value": "zapier_sync"
+        }
+      ]
+    },
+    {
+      "id": "notion-to-hubspot",
+      "name": "Zapier: Sync Notion page updates back to HubSpot",
+      "on": {
+        "resource": "notion/database_pages",
+        "event": "page_updated"
+      },
+      "emit": [
+        {
+          "resource": "hubspot/deals",
+          "event": "stage_changed",
+          "set": {
+            "sync_source": "zapier_sync"
+          }
+        }
+      ],
+      "when": [
+        {
+          "field": "sync_source",
+          "op": "notEquals",
+          "value": "zapier_sync"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "name": "Guarded Slack AI Support Agent and Jira Bot",
+  "seed": {
+    "resource": "slack/support_channel",
+    "event": "message_posted",
+    "data": {
+      "ticket_id": "inc-404",
+      "sender_type": "customer"
+    }
+  },
+  "workflows": [
+    {
+      "id": "ai-triage-to-jira",
+      "name": "AI Agent: Auto-create Jira incident from Slack complaint",
+      "on": {
+        "resource": "slack/support_channel",
+        "event": "message_posted"
+      },
+      "emit": [
+        {
+          "resource": "jira/issues",
+          "event": "issue_created",
+          "set": {
+            "sender_type": "bot"
+          }
+        }
+      ],
+      "when": [
+        {
+          "field": "sender_type",
+          "op": "notEquals",
+          "value": "bot"
+        }
+      ]
+    },
+    {
+      "id": "jira-webhook-to-slack",
+      "name": "Jira Bot: Post update to Slack on new Jira issue",
+      "on": {
+        "resource": "jira/issues",
+        "event": "issue_created"
+      },
+      "emit": [
+        {
+          "resource": "slack/support_channel",
+          "event": "message_posted",
+          "set": {
+            "sender_type": "bot"
+          }
+        }
+      ],
+      "when": [
+        {
+          "field": "sender_type",
+          "op": "notEquals",
+          "value": "bot"
+        }
+      ]
+    }
+  ]
+}

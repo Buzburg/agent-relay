@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "name": "Guarded Stripe Webhook and Billing Database Sync",
+  "seed": {
+    "resource": "stripe/invoices",
+    "event": "payment_succeeded",
+    "data": {
+      "customer_id": "cus_1042",
+      "update_origin": "stripe_gateway"
+    }
+  },
+  "workflows": [
+    {
+      "id": "stripe-to-db",
+      "name": "Server: Update internal customer record on Stripe payment",
+      "on": {
+        "resource": "stripe/invoices",
+        "event": "payment_succeeded"
+      },
+      "emit": [
+        {
+          "resource": "db/customer_records",
+          "event": "record_updated",
+          "set": {
+            "update_origin": "db_sync"
+          }
+        }
+      ],
+      "when": [
+        {
+          "field": "update_origin",
+          "op": "notEquals",
+          "value": "db_sync"
+        }
+      ]
+    },
+    {
+      "id": "db-sync-to-stripe",
+      "name": "Webhook: Sync DB customer metadata back to Stripe",
+      "on": {
+        "resource": "db/customer_records",
+        "event": "record_updated"
+      },
+      "emit": [
+        {
+          "resource": "stripe/invoices",
+          "event": "payment_succeeded",
+          "set": {
+            "update_origin": "db_sync"
+          }
+        }
+      ],
+      "when": [
+        {
+          "field": "update_origin",
+          "op": "notEquals",
+          "value": "db_sync"
+        }
+      ]
+    }
+  ]
+}

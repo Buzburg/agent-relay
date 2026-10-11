@@ -4,6 +4,23 @@
   "private": true,
   "type": "module",
   "description": "Rehearse how separate automations and agents relay events to each other, before connecting real accounts.",
+  "bin": {
+    "agent-relay": "./dist/agent-relay.mjs",
+    "agent-relay-harness": "./dist/agent-relay-harness.mjs"
+  },
+  "keywords": [
+    "ai-agents",
+    "automation",
+    "zapier",
+    "make",
+    "n8n",
+    "langchain",
+    "infinite-loop",
+    "model-checker",
+    "webhook",
+    "rehearsal",
+    "circuit-breaker"
+  ],
   "license": "MIT",
   "scripts": {
     "typecheck": "tsc --noEmit",

@@ -28,10 +28,10 @@ demoHtml = demoHtml.replace('<!-- CSP -->', () => `<meta http-equiv="Content-Sec
 await writeFile('dist/trigger-tangle-demo.html', demoHtml);
 await writeFile('dist/agent-relay-demo.html', demoHtml);
 await writeFile('dist/site/demo.html', demoHtml);
-await build({ entryPoints: ['src/cli.ts'], outfile: 'dist/trigger-tangle.mjs', bundle: true, platform: 'node', format: 'esm', target: 'node22', legalComments: 'inline', banner: { js: `/*\n${license}\n*/` } });
-await build({ entryPoints: ['src/cli.ts'], outfile: 'dist/agent-relay.mjs', bundle: true, platform: 'node', format: 'esm', target: 'node22', legalComments: 'inline', banner: { js: `/*\n${license}\n*/` } });
-await build({ entryPoints: ['src/harness-cli.ts'], outfile: 'dist/trigger-tangle-harness.mjs', bundle: true, platform: 'node', format: 'esm', target: 'node22', legalComments: 'inline', banner: { js: `/*\n${license}\n*/` } });
-await build({ entryPoints: ['src/harness-cli.ts'], outfile: 'dist/agent-relay-harness.mjs', bundle: true, platform: 'node', format: 'esm', target: 'node22', legalComments: 'inline', banner: { js: `/*\n${license}\n*/` } });
+await build({ entryPoints: ['src/cli.ts'], outfile: 'dist/trigger-tangle.mjs', bundle: true, platform: 'node', format: 'esm', target: 'node22', legalComments: 'inline', banner: { js: `#!/usr/bin/env node\n/*\n${license}\n*/` } });
+await build({ entryPoints: ['src/cli.ts'], outfile: 'dist/agent-relay.mjs', bundle: true, platform: 'node', format: 'esm', target: 'node22', legalComments: 'inline', banner: { js: `#!/usr/bin/env node\n/*\n${license}\n*/` } });
+await build({ entryPoints: ['src/harness-cli.ts'], outfile: 'dist/trigger-tangle-harness.mjs', bundle: true, platform: 'node', format: 'esm', target: 'node22', legalComments: 'inline', banner: { js: `#!/usr/bin/env node\n/*\n${license}\n*/` } });
+await build({ entryPoints: ['src/harness-cli.ts'], outfile: 'dist/agent-relay-harness.mjs', bundle: true, platform: 'node', format: 'esm', target: 'node22', legalComments: 'inline', banner: { js: `#!/usr/bin/env node\n/*\n${license}\n*/` } });
 const sums = [];
 for (const name of ['agent-relay.html', 'agent-relay-demo.html', 'agent-relay.mjs', 'agent-relay-harness.mjs', 'trigger-tangle.html', 'trigger-tangle-demo.html', 'trigger-tangle.mjs', 'trigger-tangle-harness.mjs']) {
   const data = await readFile(`dist/${name}`); sums.push(`${createHash('sha256').update(data).digest('hex')}  ${name}`);

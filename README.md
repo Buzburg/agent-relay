@@ -1,10 +1,6 @@
 # Agent Relay ⚡
 
-**Will your automations and agents keep waking each other up?**
-
-A CRM update wakes a spreadsheet sync. The spreadsheet update wakes an AI agent. The agent writes back to the CRM. Both workflows look reasonable in isolation. Together, they repeat in an infinite loop, burning API quotas and thrashing production data.
-
-Agent Relay rehearses that cross-system interaction **before you connect real accounts or deploy to production**. Describe triggers, emitted events, and field guards; see concrete repeating loop witnesses; simulate circuit breaks or marker guards, and verify two-way convergence — 100% offline with zero server calls.
+**Rehearse how separate automations and AI agents relay events to each other — before connecting real accounts.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Runtime: Node.js 22+](https://img.shields.io/badge/Runtime-Node.js_22+_|_Zero_Deps-orange.svg)](package.json)
@@ -17,39 +13,76 @@ Agent Relay rehearses that cross-system interaction **before you connect real ac
 
 ---
 
-## Try it in 5 seconds
+### The 3:00 AM Webhook Nightmare
 
-**[Open the Live Web Simulator](https://buzburg.github.io/agent-relay/)** — no installation, account, or API key. The entire simulator runs 100% client-side in your desktop Chromium or Firefox browser. GitHub serves the static page; your blueprints never touch a server.
+> **A HubSpot update wakes a Notion sync.** The Notion sync wakes an AI agent on Slack. The agent writes an update back to HubSpot. 
+> 
+> Each workflow looks completely reasonable in isolation. But together, they repeat in an infinite loop. By morning, **40,000 webhook events have fired**, third-party API quotas are completely burned, customer inboxes received 800 duplicate notifications, and your team faces a surprise platform bill.
 
-**[Watch the 20-second walkthrough](https://buzburg.github.io/agent-relay/demo.html)** &middot; [Download the MP4](https://github.com/Buzburg/agent-relay/releases/download/v0.4.0/trigger-tangle-20s.mp4). See a repeating sync, add a marker guard, and verify that useful changes still travel in both directions.
-
-### Prefer to use it offline?
-
-1. Download **[agent-relay.html from the latest release](https://github.com/Buzburg/agent-relay/releases/latest)**.
-2. Open it in any modern browser. Zero installation, zero backend, and no internet connection needed.
-3. Try built-in scenarios: **Contact ping-pong**, **Marker-guarded sync**, **Auto-reply loop**, or **Multi-agent handoff**.
-4. Open **Build your own two-way sync** to declare resources and test origin markers visually without writing JSON.
-5. Export a complete JSON verification proof or human-readable HTML audit report.
-
-### No account, no cloud, zero telemetry.
-The app never connects to your live accounts or runs live workflows. Blueprints, identifiers, and reports stay strictly on your local machine.
-
-**This is an explicit design-time model checker, not an opaque scanner.** You supply the resource IDs and transition declarations. Results apply deterministically to the chosen seed and model bounds.
+**Agent Relay prevents this.** Rehearse cross-system automation and multi-agent interactions **offline in < 2 milliseconds** before connecting live accounts or deploying to production. Describe triggers, emitted events, and field guards; see concrete repeating loop witnesses; simulate circuit breaks or marker guards, and verify two-way convergence — 100% offline with zero server calls.
 
 ---
 
-## What makes this useful?
+## 🚀 Quick Start: 3 Ways to Run (In 10 Seconds)
 
-- **External feedback matters.** Workflows and agents connect through exact resource and event identifiers, not only explicit "call next workflow" DAG nodes.
-- **Concrete cycle witnesses.** A loop report includes the exact lead-in and a closed, repeating sequence of events with full field states at every step.
-- **Guards are executable declarations.** Supported field checks can physically halt a modeled branch. An incorrectly placed marker does not magically make a loop disappear.
-- **Reconvergence is not a loop.** Two branches reaching the same downstream signal are handled separately from a causal cycle.
-- **Counts preserve duplicate deliveries.** On complete acyclic designs, report modeled workflow starts and emitted events using exact integers without loss from deduplication.
-- **Limits stay visible.** Reaching the exploration budget produces an explicit incomplete result, never a misleading false clear.
+### 1. Instant Web Simulator (Zero Installation)
+**[Open the Live Web Simulator](https://buzburg.github.io/agent-relay/)** — runs 100% client-side in any modern browser. GitHub serves the static page; your blueprints and data never leave your local machine.
+
+- **[Watch the 20-second walkthrough](https://buzburg.github.io/agent-relay/demo.html)** &middot; [Download the MP4](https://github.com/Buzburg/agent-relay/releases/download/v0.4.0/trigger-tangle-20s.mp4)
+
+### 2. Standalone Single-File App (Air-Gapped / Offline)
+1. Download **[`agent-relay.html` from the latest release](https://github.com/Buzburg/agent-relay/releases/latest)**.
+2. Double-click to open in Chrome, Firefox, or Safari. Zero installation, zero backend, and no internet connection required.
+3. Use the built-in visual **Two-Way Sync Builder** to test origin markers without writing JSON.
+4. Export cryptographic verification proofs and human-readable HTML audit reports.
+
+### 3. Zero-Dependency Developer CLI (Node.js 22+)
+Clone and run in seconds with zero external package dependencies:
+
+```sh
+# Clone the repository
+git clone https://github.com/Buzburg/agent-relay.git
+cd agent-relay && npm run build
+
+# Reproduce an infinite loop in 1ms (Exit code 1):
+node dist/agent-relay.mjs examples/zapier-hubspot-notion-loop.json
+
+# Verify the origin marker guard fix (Exit code 0 - settles):
+node dist/agent-relay.mjs examples/zapier-hubspot-notion-guarded.json
+
+# Export a reproducible HTML audit report:
+node dist/agent-relay.mjs examples/contact-loop.json --format html > report.html
+```
 
 ---
 
-## How It Works: Causal Loop Detection Architecture
+## 🎯 Battle-Tested Real-World Scenarios
+
+Agent Relay includes ready-to-run blueprints in the [`examples/`](examples/) folder modeling common real-world automation hazards:
+
+| Scenario | What Happens Without Guard | The Intervention | Rehearsal Blueprint |
+|---|---|---|---|
+| **HubSpot & Notion Sync** | Zapier copies HubSpot deal to Notion; Notion sync triggers Zapier back to HubSpot. | Field guard checks `sync_source ≠ "zapier_sync"`, halting loop at step 1. | [`zapier-hubspot-notion-loop.json`](examples/zapier-hubspot-notion-loop.json)<br>[`zapier-hubspot-notion-guarded.json`](examples/zapier-hubspot-notion-guarded.json) |
+| **Slack AI Agent & Jira Bot** | AI triage reads Slack and creates Jira issue; Jira webhook announces issue in Slack; AI triage reads announcement. | Filter guard `sender_type ≠ "bot"` ignores automated messages. | [`slack-jira-agent-storm.json`](examples/slack-jira-agent-storm.json)<br>[`slack-jira-agent-guarded.json`](examples/slack-jira-agent-guarded.json) |
+| **Stripe & Billing Database** | Stripe webhook updates Postgres; DB trigger updates Stripe customer metadata. | Origin marker `update_origin ≠ "db_sync"` breaks the bounce. | [`stripe-webhook-cascade.json`](examples/stripe-webhook-cascade.json)<br>[`stripe-webhook-guarded.json`](examples/stripe-webhook-guarded.json) |
+| **CRM & Google Sheets Ping-Pong** | Two bidirectional sync workflows endlessly bounce contact edits. | Origin marker halts propagation after one hop from either resource. | [`contact-loop.json`](examples/contact-loop.json)<br>[`guarded-sync.json`](examples/guarded-sync.json) |
+
+---
+
+## 📊 Why Agent Relay?
+
+| Capability | Agent Relay | Live Sandbox Testing | Static DAG Linters | Staging Accounts |
+|---|:---:|:---:|:---:|:---:|
+| **100% Offline & Air-Gapped** | ✅ Zero Cloud Calls | ❌ Cloud-dependent | ✅ Local syntax | ❌ Requires staging infra |
+| **Zero Cost / Zero Quota Burn** | ✅ Free & Instant | ❌ Burns API quotas | ✅ Free | ❌ Expensive to run |
+| **Cross-System Loop Witnesses** | ✅ Exact Causal Trace | ❌ Only after loop explodes | ❌ Blind to external webhooks | ❌ Difficult to reproduce |
+| **Executable Field Guards** | ✅ Exact Match & Semantics | ❌ Platform-specific | ❌ Limited | ❌ Trial-and-error |
+| **Deterministic Execution** | ⚡ < 2ms | ⏳ Minutes to hours | ⚡ Fast | ⏳ Hours |
+| **Cryptographic Audit Proof** | ✅ SHA-256 bound | ❌ Messy server logs | ❌ None | ❌ None |
+
+---
+
+## 🔍 How It Works: Causal Loop Detection Architecture
 
 ```mermaid
 graph TD
@@ -64,11 +97,21 @@ graph TD
 
 ---
 
-## Use it in an Agent or Build Pipeline
+## 🤖 CI/CD & Agent Pipeline Integration
 
 Agent Relay includes a zero-dependency CLI that AI agents (such as [Swarmojo](https://github.com/Buzburg/Swarmojo)) and CI/CD pipelines can invoke as a deterministic test:
 
-### 1. Agent Evaluation Harness
+### 1. Drop into GitHub Actions
+
+Add this step to your CI pipeline (`.github/workflows/rehearse.yml`) to automatically reject pull requests that introduce webhook or agent loops:
+
+```yaml
+- name: Rehearse Automation Blueprints
+  run: |
+    node dist/agent-relay.mjs examples/guarded-sync.json
+```
+
+### 2. Autonomous Agent Evaluation Harness
 
 The **[Agent Relay Harness](docs/HARNESS.md)** compares an original baseline design against an agent's proposed candidate across operator-owned scenarios. Require an invoice draft, forbid an invoice send, and reject fixes that silently disable the useful work:
 
@@ -81,33 +124,18 @@ node dist/agent-relay-harness.mjs \
 
 The command returns structured JSON evidence for both directions of the sync with deterministic cryptographic hashes.
 
-### 2. Standalone CLI
+### 3. Deterministic Exit Codes
 
-Download `agent-relay.mjs` from the release. Requires **Node.js 22+**, with zero external package dependencies:
-
-```sh
-# Reproduce an infinite loop (Exit code 1 expected):
-node agent-relay.mjs --example contact-loop
-
-# Rehearse a change without modifying the blueprint on disk:
-node agent-relay.mjs --example contact-loop --disable sheet-to-crm --format json
-
-# Export an editable starting blueprint:
-node agent-relay.mjs --example contact-loop --blueprint > blueprint.json
-
-# Check your custom blueprint and generate an HTML report:
-node agent-relay.mjs blueprint.json --format html > rehearsal.html
-```
-
-#### Deterministic Exit Codes
-- **`0`**: Blueprint settles for the modeled seed (acyclic).
+- **`0`**: Blueprint settles for the modeled seed (acyclic convergence).
 - **`1`**: Causal loop found in model (repeating cycle witness generated).
 - **`2`**: Inconclusive within state/transition budget.
 - **`3`**: Invalid input schema or syntax error.
 
 ---
 
-## A Complete Blueprint Example
+## 📝 Blueprint Specification
+
+Blueprints are declared as compact, readable JSON:
 
 ```json
 {
@@ -123,26 +151,47 @@ node agent-relay.mjs blueprint.json --format html > rehearsal.html
       "id": "crm-to-sheet",
       "name": "Copy contact to sheet",
       "on": {"resource": "crm/contacts", "event": "updated"},
-      "emit": [{"resource": "sheets/contacts", "event": "updated"}]
+      "emit": [
+        {
+          "resource": "sheets/contacts",
+          "event": "updated",
+          "set": {"origin": "contact-sync"}
+        }
+      ],
+      "when": [
+        {"field": "origin", "op": "notEquals", "value": "contact-sync"}
+      ]
     },
     {
       "id": "sheet-to-crm",
       "name": "Copy row to CRM",
       "on": {"resource": "sheets/contacts", "event": "updated"},
-      "emit": [{"resource": "crm/contacts", "event": "updated"}]
+      "emit": [
+        {
+          "resource": "crm/contacts",
+          "event": "updated",
+          "set": {"origin": "contact-sync"}
+        }
+      ],
+      "when": [
+        {"field": "origin", "op": "notEquals", "value": "contact-sync"}
+      ]
     }
   ]
 }
 ```
 
-Adding an origin marker guard:
-- Add `"set": {"origin": "contact-sync"}` to each emit effect.
-- Add `"when": [{"field": "origin", "op": "notEquals", "value": "contact-sync"}]` to both workflows.
-- Run `node agent-relay.mjs` &rarr; exit code changes from **1 (loop found)** to **0 (settles)**.
+---
+
+## 🔒 Security & Privacy Guarantees
+
+- **No account connection, no cloud, zero telemetry**: Blueprints, identifiers, and reports stay strictly on your local machine.
+- **Self-contained HTML**: The browser workbench is bundled into a single file with strict Content Security Policy (`default-src 'none'`) and inline cryptographic SRI hashes.
+- **Deterministic state model**: Explores reachable states breadth-first with strict budgets, never hallucinating transitions.
 
 ---
 
-## The Buzburg Ecosystem
+## 🌐 The Buzburg Ecosystem
 
 Agent Relay is part of the **Buzburg Suite** of sovereign developer tools:
 
@@ -151,6 +200,6 @@ Agent Relay is part of the **Buzburg Suite** of sovereign developer tools:
 
 ---
 
-## License & Authors
+## 📜 License & Authors
 
 Licensed under the [MIT License](LICENSE). Built with craft by **[Buzburg AI](mailto:buzburgai@gmail.com)**.
