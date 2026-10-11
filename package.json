@@ -1,12 +1,14 @@
 {
-  "name": "agent-relay",
+  "name": "loop-guard",
   "version": "0.4.0",
   "private": true,
   "type": "module",
   "description": "Rehearse how separate automations and agents relay events to each other, before connecting real accounts.",
   "bin": {
+    "loop-guard": "./dist/loop-guard.mjs",
+    "loop-guard-harness": "./dist/loop-guard-harness.mjs",
     "agent-relay": "./dist/agent-relay.mjs",
-    "agent-relay-harness": "./dist/agent-relay-harness.mjs"
+    "trigger-tangle": "./dist/trigger-tangle.mjs"
   },
   "keywords": [
     "ai-agents",

@@ -32,4 +32,4 @@ jobs:
       - name: Publish verified downloads
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" dist/agent-relay.html dist/agent-relay.mjs dist/agent-relay-harness.mjs dist/agent-relay-demo.html dist/trigger-tangle.html dist/trigger-tangle.mjs dist/trigger-tangle-harness.mjs dist/trigger-tangle-demo.html dist/trigger-tangle-20s.mp4 dist/trigger-tangle-demo-evidence.json dist/SHA256SUMS.txt --verify-tag --title "Agent Relay $GITHUB_REF_NAME" --notes-file docs/RELEASE.md
+        run: gh release create "$GITHUB_REF_NAME" dist/loop-guard.html dist/loop-guard.mjs dist/loop-guard-harness.mjs dist/loop-guard-demo.html dist/agent-relay.html dist/agent-relay.mjs dist/agent-relay-harness.mjs dist/agent-relay-demo.html dist/trigger-tangle.html dist/trigger-tangle.mjs dist/trigger-tangle-harness.mjs dist/trigger-tangle-demo.html dist/trigger-tangle-20s.mp4 dist/trigger-tangle-demo-evidence.json dist/SHA256SUMS.txt --verify-tag --title "Loop Guard $GITHUB_REF_NAME" --notes-file docs/RELEASE.md

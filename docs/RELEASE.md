@@ -1,4 +1,4 @@
-# Agent Relay v0.4.0
+# Loop Guard v0.4.0
 
 Rehearse how separate automations and AI agents trigger each other using an explicit, limited event model. Catch infinite feedback loops, compare interventions, or verify that the declared chain settles for the selected starting event — 100% offline with zero cloud telemetry.
 
@@ -8,11 +8,11 @@ Rehearse how separate automations and AI agents trigger each other using an expl
 - Includes a shareable 720p MP4 and an offline HTML version with keyboard playback controls and reduced-motion support.
 - Generates the illustration from actual analyzer reports on synthetic rules, with downloadable evidence and checksums.
 - Adds deterministic frame capture and browser checks for the walkthrough. No new runtime dependencies.
-- Dual-packaged for **Agent Relay** (`agent-relay.html`, `agent-relay.mjs`) alongside legacy compatibility for `trigger-tangle`.
+- Packaged as **Loop Guard** (`loop-guard.html`, `loop-guard.mjs`, `loop-guard-harness.mjs`) alongside legacy compatibility for `agent-relay` and `trigger-tangle`.
 
 ## Existing harness integration
 
-- Adds `agent-relay-harness.mjs`, a dependency-free review layer for a custom agent harness.
+- Adds `loop-guard-harness.mjs`, a dependency-free review layer for a custom agent harness.
 - Compares baseline and candidate designs across up to eight operator-owned scenarios, with required and forbidden emitted outcomes.
 - Rejects proposals that remove necessary work, identifies regressions, and keeps incomplete results inconclusive.
 - Binds reports to decoded input-text hashes, includes the input snapshots, and always reports `executionAllowed: false`.
@@ -20,11 +20,11 @@ Rehearse how separate automations and AI agents trigger each other using an expl
 
 ## Downloads
 
-- `agent-relay.html`: open this standalone offline workbench in any modern browser (zero installation).
-- `agent-relay.mjs`: command-line checker for Node.js 22+. Start with `node agent-relay.mjs --help`.
-- `agent-relay-harness.mjs`: compare baseline, candidate and operator-owned suite. Start with `node agent-relay-harness.mjs --help`.
-- `agent-relay-demo.html`: open the interactive 20-second illustrated walkthrough offline.
-- `trigger-tangle.html`, `trigger-tangle.mjs`, `trigger-tangle-harness.mjs`: backward-compatible legacy binaries.
+- `loop-guard.html`: open this standalone offline workbench in any modern browser (zero installation).
+- `loop-guard.mjs`: command-line checker for Node.js 22+. Start with `node loop-guard.mjs --help`.
+- `loop-guard-harness.mjs`: compare baseline, candidate and operator-owned suite. Start with `node loop-guard-harness.mjs --help`.
+- `loop-guard-demo.html`: open the interactive 20-second illustrated walkthrough offline.
+- `agent-relay.*`, `trigger-tangle.*`: backward-compatible legacy binaries.
 - `trigger-tangle-20s.mp4`: silent, captioned 1280 × 720 video, 30 fps, exactly 20 seconds.
 - `trigger-tangle-demo-evidence.json`: the reports used in the illustration and source/video hashes.
 - `SHA256SUMS.txt`: SHA-256 digests for all release files.

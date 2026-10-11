@@ -1,4 +1,4 @@
-# Agent Relay ⚡
+# Loop Guard 🛡️
 
 **Rehearse how separate automations and AI agents relay events to each other — before connecting real accounts.**
 
@@ -9,7 +9,7 @@
 [![Tests: 109/109 Passing](https://img.shields.io/badge/Tests-109%2F109_Passing-brightgreen.svg)](tests/)
 [![Sister Project: Swarmojo](https://img.shields.io/badge/Sister_Project-Swarmojo-gold.svg)](https://github.com/Buzburg/Swarmojo)
 
-![Agent Relay showing a synthetic cross-workflow rehearsal](docs/agent_relay_screenshot.png)
+![Loop Guard showing a synthetic cross-workflow rehearsal](docs/loop_guard_screenshot.png)
 
 ---
 
@@ -19,19 +19,19 @@
 > 
 > Each workflow looks completely reasonable in isolation. But together, they repeat in an infinite loop. By morning, **40,000 webhook events have fired**, third-party API quotas are completely burned, customer inboxes received 800 duplicate notifications, and your team faces a surprise platform bill.
 
-**Agent Relay prevents this.** Rehearse cross-system automation and multi-agent interactions **offline in < 2 milliseconds** before connecting live accounts or deploying to production. Describe triggers, emitted events, and field guards; see concrete repeating loop witnesses; simulate circuit breaks or marker guards, and verify two-way convergence — 100% offline with zero server calls.
+**Loop Guard prevents this.** Rehearse cross-system automation and multi-agent interactions **offline in < 2 milliseconds** before connecting live accounts or deploying to production. Describe triggers, emitted events, and field guards; see concrete repeating loop witnesses; simulate circuit breaks or marker guards, and verify two-way convergence — 100% offline with zero server calls.
 
 ---
 
 ## 🚀 Quick Start: 3 Ways to Run (In 10 Seconds)
 
 ### 1. Instant Web Simulator (Zero Installation)
-**[Open the Live Web Simulator](https://buzburg.github.io/agent-relay/)** — runs 100% client-side in any modern browser. GitHub serves the static page; your blueprints and data never leave your local machine.
+**[Open the Live Web Simulator](https://buzburg.github.io/loop-guard/)** — runs 100% client-side in any modern browser. GitHub serves the static page; your blueprints and data never leave your local machine.
 
-- **[Watch the 20-second walkthrough](https://buzburg.github.io/agent-relay/demo.html)** &middot; [Download the MP4](https://github.com/Buzburg/agent-relay/releases/download/v0.4.0/trigger-tangle-20s.mp4)
+- **[Watch the 20-second walkthrough](https://buzburg.github.io/loop-guard/demo.html)** &middot; [Download the MP4](https://github.com/Buzburg/loop-guard/releases/download/v0.4.0/trigger-tangle-20s.mp4)
 
 ### 2. Standalone Single-File App (Air-Gapped / Offline)
-1. Download **[`agent-relay.html` from the latest release](https://github.com/Buzburg/agent-relay/releases/latest)**.
+1. Download **[`loop-guard.html` from the latest release](https://github.com/Buzburg/loop-guard/releases/latest)**.
 2. Double-click to open in Chrome, Firefox, or Safari. Zero installation, zero backend, and no internet connection required.
 3. Use the built-in visual **Two-Way Sync Builder** to test origin markers without writing JSON.
 4. Export cryptographic verification proofs and human-readable HTML audit reports.
@@ -41,24 +41,24 @@ Clone and run in seconds with zero external package dependencies:
 
 ```sh
 # Clone the repository
-git clone https://github.com/Buzburg/agent-relay.git
-cd agent-relay && npm run build
+git clone https://github.com/Buzburg/loop-guard.git
+cd loop-guard && npm run build
 
 # Reproduce an infinite loop in 1ms (Exit code 1):
-node dist/agent-relay.mjs examples/zapier-hubspot-notion-loop.json
+node dist/loop-guard.mjs examples/zapier-hubspot-notion-loop.json
 
 # Verify the origin marker guard fix (Exit code 0 - settles):
-node dist/agent-relay.mjs examples/zapier-hubspot-notion-guarded.json
+node dist/loop-guard.mjs examples/zapier-hubspot-notion-guarded.json
 
 # Export a reproducible HTML audit report:
-node dist/agent-relay.mjs examples/contact-loop.json --format html > report.html
+node dist/loop-guard.mjs examples/contact-loop.json --format html > report.html
 ```
 
 ---
 
 ## 🎯 Battle-Tested Real-World Scenarios
 
-Agent Relay includes ready-to-run blueprints in the [`examples/`](examples/) folder modeling common real-world automation hazards:
+Loop Guard includes ready-to-run blueprints in the [`examples/`](examples/) folder modeling common real-world automation hazards:
 
 | Scenario | What Happens Without Guard | The Intervention | Rehearsal Blueprint |
 |---|---|---|---|
@@ -69,9 +69,9 @@ Agent Relay includes ready-to-run blueprints in the [`examples/`](examples/) fol
 
 ---
 
-## 📊 Why Agent Relay?
+## 📊 Why Loop Guard?
 
-| Capability | Agent Relay | Live Sandbox Testing | Static DAG Linters | Staging Accounts |
+| Capability | Loop Guard | Live Sandbox Testing | Static DAG Linters | Staging Accounts |
 |---|:---:|:---:|:---:|:---:|
 | **100% Offline & Air-Gapped** | ✅ Zero Cloud Calls | ❌ Cloud-dependent | ✅ Local syntax | ❌ Requires staging infra |
 | **Zero Cost / Zero Quota Burn** | ✅ Free & Instant | ❌ Burns API quotas | ✅ Free | ❌ Expensive to run |
@@ -99,7 +99,7 @@ graph TD
 
 ## 🤖 CI/CD & Agent Pipeline Integration
 
-Agent Relay includes a zero-dependency CLI that AI agents (such as [Swarmojo](https://github.com/Buzburg/Swarmojo)) and CI/CD pipelines can invoke as a deterministic test:
+Loop Guard includes a zero-dependency CLI that AI agents (such as [Swarmojo](https://github.com/Buzburg/Swarmojo)) and CI/CD pipelines can invoke as a deterministic test:
 
 ### 1. Drop into GitHub Actions
 
@@ -108,15 +108,15 @@ Add this step to your CI pipeline (`.github/workflows/rehearse.yml`) to automati
 ```yaml
 - name: Rehearse Automation Blueprints
   run: |
-    node dist/agent-relay.mjs examples/guarded-sync.json
+    node dist/loop-guard.mjs examples/guarded-sync.json
 ```
 
 ### 2. Autonomous Agent Evaluation Harness
 
-The **[Agent Relay Harness](docs/HARNESS.md)** compares an original baseline design against an agent's proposed candidate across operator-owned scenarios. Require an invoice draft, forbid an invoice send, and reject fixes that silently disable the useful work:
+The **[Loop Guard Harness](docs/HARNESS.md)** compares an original baseline design against an agent's proposed candidate across operator-owned scenarios. Require an invoice draft, forbid an invoice send, and reject fixes that silently disable the useful work:
 
 ```sh
-node dist/agent-relay-harness.mjs \
+node dist/loop-guard-harness.mjs \
   --baseline examples/contact-loop.json \
   --candidate examples/guarded-sync.json \
   --suite examples/contact-suite.json
@@ -193,9 +193,9 @@ Blueprints are declared as compact, readable JSON:
 
 ## 🌐 The Buzburg Ecosystem
 
-Agent Relay is part of the **Buzburg Suite** of sovereign developer tools:
+Loop Guard is part of the **Buzburg Suite** of sovereign developer tools:
 
-- ⚡ **[Agent Relay](https://github.com/Buzburg/agent-relay)**: Rehearse how separate automations and agents relay events to each other before connecting real accounts.
+- 🛡️ **[Loop Guard](https://github.com/Buzburg/loop-guard)**: Rehearse how separate automations and agents relay events to each other before connecting real accounts.
 - 🐝 **[Swarmojo](https://github.com/Buzburg/Swarmojo)**: The blazing-fast local-first AI agent meta-harness with sub-microsecond Mojo SIMD speed, Paperclip-grade org charts, hard budgets, and Swarmojo HUD.
 
 ---
