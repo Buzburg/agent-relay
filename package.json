@@ -1,9 +1,9 @@
 {
-  "name": "trigger-tangle",
+  "name": "agent-relay",
   "version": "0.4.0",
   "private": true,
   "type": "module",
-  "description": "Rehearse how separate automations trigger each other, before connecting real accounts.",
+  "description": "Rehearse how separate automations and agents relay events to each other, before connecting real accounts.",
   "license": "MIT",
   "scripts": {
     "typecheck": "tsc --noEmit",

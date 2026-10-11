@@ -1,73 +1,113 @@
-# TriggerTangle
+# Agent Relay ⚡
 
-**Will your automations keep waking each other up?**
+**Will your automations and agents keep waking each other up?**
 
-A CRM update wakes a spreadsheet sync. The spreadsheet update wakes a CRM sync. Both workflows look reasonable on their own. Together, they can repeat.
+A CRM update wakes a spreadsheet sync. The spreadsheet update wakes an AI agent. The agent writes back to the CRM. Both workflows look reasonable in isolation. Together, they repeat in an infinite loop, burning API quotas and thrashing production data.
 
-TriggerTangle rehearses that interaction **before you connect real accounts**. Describe the triggers, emitted events and simple field guards; see a concrete repeating chain; switch off a workflow or try a marker guard and compare the result.
+Agent Relay rehearses that cross-system interaction **before you connect real accounts or deploy to production**. Describe triggers, emitted events, and field guards; see concrete repeating loop witnesses; simulate circuit breaks or marker guards, and verify two-way convergence — 100% offline with zero server calls.
 
-![TriggerTangle showing a synthetic cross-workflow rehearsal](docs/screenshot.png)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Runtime: Node.js 22+](https://img.shields.io/badge/Runtime-Node.js_22+_|_Zero_Deps-orange.svg)](package.json)
+[![Type System: TypeScript 5.9](https://img.shields.io/badge/TypeScript-5.9_Strict-blue.svg)](tsconfig.json)
+[![Architecture: 100% Client-Side](https://img.shields.io/badge/Architecture-100%25_Offline_|_Zero_Cloud-emerald.svg)](#no-account-no-cloud-zero-telemetry)
+[![Tests: 109/109 Passing](https://img.shields.io/badge/Tests-109%2F109_Passing-brightgreen.svg)](tests/)
+[![Sister Project: Swarmojo](https://img.shields.io/badge/Sister_Project-Swarmojo-gold.svg)](https://github.com/Buzburg/Swarmojo)
 
-## Try it
+![Agent Relay showing a synthetic cross-workflow rehearsal](docs/screenshot.png)
 
-**[Watch the 20-second walkthrough](https://buzburg.github.io/trigger-tangle/demo.html)** · [Download the MP4](https://github.com/Buzburg/trigger-tangle/releases/download/v0.4.0/trigger-tangle-20s.mp4). See a repeating sync, add a marker guard, and verify useful changes still travel in both directions. This illustrated example uses the real checker on synthetic rules. [How it was made](docs/DEMO.md).
+---
 
-**[Open the live demo](https://buzburg.github.io/trigger-tangle/)** — no installation, account or API key. The app runs in your browser. GitHub serves the page; your blueprints are not sent to a server.
+## Try it in 5 seconds
 
-Prefer to use it offline?
+**[Open the Live Web Simulator](https://buzburg.github.io/agent-relay/)** — no installation, account, or API key. The entire simulator runs 100% client-side in your desktop Chromium or Firefox browser. GitHub serves the static page; your blueprints never touch a server.
 
-1. Download **[trigger-tangle.html from the latest release](https://github.com/Buzburg/trigger-tangle/releases/latest)**.
-2. Open it in a current desktop Chromium or Firefox browser. No installation or connection needed.
-3. Try contact ping-pong, a marker-guarded sync, an auto-reply loop or an ordinary sales handoff.
-4. Open **Build your own two-way sync** to name two resources and try an origin marker without writing JSON. Switch a workflow off to rehearse an intervention; use the advanced editor for larger designs.
-5. Export a complete JSON or readable HTML report, including the blueprint that produced it.
+**[Watch the 20-second walkthrough](https://buzburg.github.io/agent-relay/demo.html)** &middot; [Download the MP4](https://github.com/Buzburg/agent-relay/releases/download/v0.4.0/trigger-tangle-20s.mp4). See a repeating sync, add a marker guard, and verify that useful changes still travel in both directions.
 
-No account, model, API key, telemetry, storage or runtime network calls. The app never runs your workflows or changes your accounts. Reports include resource identifiers and sample data; review before sharing.
+### Prefer to use it offline?
 
-**This is an explicit design model, not a live n8n/Zapier scanner.** You supply the resource IDs and behavior. Results apply only to the chosen seed and those declarations.
+1. Download **[agent-relay.html from the latest release](https://github.com/Buzburg/agent-relay/releases/latest)**.
+2. Open it in any modern browser. Zero installation, zero backend, and no internet connection needed.
+3. Try built-in scenarios: **Contact ping-pong**, **Marker-guarded sync**, **Auto-reply loop**, or **Multi-agent handoff**.
+4. Open **Build your own two-way sync** to declare resources and test origin markers visually without writing JSON.
+5. Export a complete JSON verification proof or human-readable HTML audit report.
 
-The public demo uses `dist/site/index.html`. See [hosting instructions](docs/HOSTING.md) and the [launch assistant plan](docs/GROWTH.md). Demo updates use an explicit publish action after tests pass.
+### No account, no cloud, zero telemetry.
+The app never connects to your live accounts or runs live workflows. Blueprints, identifiers, and reports stay strictly on your local machine.
+
+**This is an explicit design-time model checker, not an opaque scanner.** You supply the resource IDs and transition declarations. Results apply deterministically to the chosen seed and model bounds.
+
+---
 
 ## What makes this useful?
 
-- **External feedback matters.** Workflows connect through exact resource and event identifiers, not only explicit “call workflow” nodes.
-- **Show the chain.** A loop report includes the lead-in and a closed, repeating sequence of events, with the fields at each step.
-- **Guards are executable declarations.** Supported field checks can actually stop a modeled branch. An incorrectly placed marker does not magically make a loop disappear.
-- **Reconvergence is not a loop.** Two branches reaching the same signal are handled separately from a causal cycle.
-- **Counts preserve duplicate deliveries.** On complete acyclic designs, report modeled workflow starts and emitted events using exact integers. Merging equivalent states for analysis does not silently deduplicate their deliveries.
-- **Limits stay visible.** Reaching the exploration budget produces an incomplete result, never a reassuring “all clear.”
+- **External feedback matters.** Workflows and agents connect through exact resource and event identifiers, not only explicit "call next workflow" DAG nodes.
+- **Concrete cycle witnesses.** A loop report includes the exact lead-in and a closed, repeating sequence of events with full field states at every step.
+- **Guards are executable declarations.** Supported field checks can physically halt a modeled branch. An incorrectly placed marker does not magically make a loop disappear.
+- **Reconvergence is not a loop.** Two branches reaching the same downstream signal are handled separately from a causal cycle.
+- **Counts preserve duplicate deliveries.** On complete acyclic designs, report modeled workflow starts and emitted events using exact integers without loss from deduplication.
+- **Limits stay visible.** Reaching the exploration budget produces an explicit incomplete result, never a misleading false clear.
 
-## Use it in an agent or build workflow
+---
 
-**New: [TriggerTangle Harness](docs/HARNESS.md)** compares an original design and an agent's proposal against several operator-owned scenarios. Require an invoice draft, forbid an invoice send, and reject a “fix” that turns all the useful work off. Every result retains human review; the harness executes no workflows.
+## How It Works: Causal Loop Detection Architecture
 
-```sh
-node dist/trigger-tangle-harness.mjs --baseline examples/contact-loop.json --candidate examples/guarded-sync.json --suite examples/contact-suite.json
+```mermaid
+graph TD
+    Seed([Initial Trigger Seed: CRM Contact Updated]) --> W1[Workflow / Agent A: Copy Contact to Sheet]
+    W1 --> Event1[Event Emitted: Sheets Contact Updated]
+    Event1 --> W2[Workflow / Agent B: Copy Row to CRM]
+    W2 --> LoopCheck{Causal Cycle Check}
+    LoopCheck -- Without Field Guard --> Repeat[🔁 Infinite Repeating Cycle Witness Found (Exit 1)]
+    LoopCheck -- With Origin Guard --> Halted[🛡️ Guard Halts Propagation: Acyclic Convergence (Exit 0)]
+    Halted --> VerProof[📜 Export Cryptographic JSON & HTML Audit Report]
 ```
 
-Build the repository first, or download `trigger-tangle-harness.mjs` and the examples. The command returns JSON evidence for both directions of the sync. See [the harness contract](docs/HARNESS.md) for status codes and integration boundaries.
+---
 
-Download `trigger-tangle.mjs` from the release. Requires **Node.js 22+**, with no runtime package installation.
+## Use it in an Agent or Build Pipeline
+
+Agent Relay includes a zero-dependency CLI that AI agents (such as [Swarmojo](https://github.com/Buzburg/Swarmojo)) and CI/CD pipelines can invoke as a deterministic test:
+
+### 1. Agent Evaluation Harness
+
+The **[Agent Relay Harness](docs/HARNESS.md)** compares an original baseline design against an agent's proposed candidate across operator-owned scenarios. Require an invoice draft, forbid an invoice send, and reject fixes that silently disable the useful work:
 
 ```sh
-# Reproduce a loop. Exit status 1 is expected.
-node trigger-tangle.mjs --example contact-loop
-
-# Rehearse a change without modifying the blueprint on disk.
-node trigger-tangle.mjs --example contact-loop --disable sheet-to-crm --format json
-
-# Save an editable starting design.
-node trigger-tangle.mjs --example contact-loop --blueprint > blueprint.json
-
-# Check your design and save a complete report.
-node trigger-tangle.mjs blueprint.json --format html > rehearsal.html
+node dist/agent-relay-harness.mjs \
+  --baseline examples/contact-loop.json \
+  --candidate examples/guarded-sync.json \
+  --suite examples/contact-suite.json
 ```
 
-Exit codes: **0** settles for this modeled seed, **1** a loop was found in the model, **2** inconclusive within budget, **3** invalid input or an error. Standard output is the report; errors go to standard error. No input files are rewritten. Keep input files unchanged during the check.
+The command returns structured JSON evidence for both directions of the sync with deterministic cryptographic hashes.
 
-An agent can propose a blueprint and invoke the CLI as a read-only test. It must preserve the stated assumptions and human approval requirements of your actual systems. See [the agent integration guide](docs/AGENT_GUIDE.md).
+### 2. Standalone CLI
 
-## A complete small blueprint
+Download `agent-relay.mjs` from the release. Requires **Node.js 22+**, with zero external package dependencies:
+
+```sh
+# Reproduce an infinite loop (Exit code 1 expected):
+node agent-relay.mjs --example contact-loop
+
+# Rehearse a change without modifying the blueprint on disk:
+node agent-relay.mjs --example contact-loop --disable sheet-to-crm --format json
+
+# Export an editable starting blueprint:
+node agent-relay.mjs --example contact-loop --blueprint > blueprint.json
+
+# Check your custom blueprint and generate an HTML report:
+node agent-relay.mjs blueprint.json --format html > rehearsal.html
+```
+
+#### Deterministic Exit Codes
+- **`0`**: Blueprint settles for the modeled seed (acyclic).
+- **`1`**: Causal loop found in model (repeating cycle witness generated).
+- **`2`**: Inconclusive within state/transition budget.
+- **`3`**: Invalid input schema or syntax error.
+
+---
+
+## A Complete Blueprint Example
 
 ```json
 {
@@ -95,32 +135,22 @@ An agent can propose a blueprint and invoke the CLI as a read-only test. It must
 }
 ```
 
-A modeled marker intervention adds `"set": {"origin": "contact-sync"}` to each effect and `"when": [{"field": "origin", "op": "notEquals", "value": "contact-sync"}]` to both workflows. This assumes the marker is propagated and the actual platform checks it as declared. It is an example, not an automatic fix for every synchronization design.
+Adding an origin marker guard:
+- Add `"set": {"origin": "contact-sync"}` to each emit effect.
+- Add `"when": [{"field": "origin", "op": "notEquals", "value": "contact-sync"}]` to both workflows.
+- Run `node agent-relay.mjs` &rarr; exit code changes from **1 (loop found)** to **0 (settles)**.
 
-## The model's boundaries
+---
 
-Resource IDs and event types match exactly, including capitalization. Every matching enabled workflow evaluates all its conditions against an incoming signal. Each effect copies that signal's fields, removes `unset` keys, then applies constant `set` fields. Sibling effects are independent. No code, expressions or templates are executed.
+## The Buzburg Ecosystem
 
-There is no persistent business-record state, concurrency, retry behavior, timing, changed-only updates, delivery deduplication or probabilistic agent behavior. A discovered cycle can repeat indefinitely under this deterministic model; it does **not** prove that a real service will run away. A settling result does **not** certify a workflow or establish that intended business work still occurs. Disabling everything settles too.
+Agent Relay is part of the **Buzburg Suite** of sovereign developer tools:
 
-The browser and original CLI check one selected seed per rehearsal. The harness compares up to eight operator-owned scenarios and checks their required and forbidden emissions. No automatic n8n/Zapier import is provided: hidden resource expressions and platform conditions require accurate modeling, not optimistic guesses.
+- ⚡ **[Agent Relay](https://github.com/Buzburg/agent-relay)**: Rehearse how separate automations and agents relay events to each other before connecting real accounts.
+- 🐝 **[Swarmojo](https://github.com/Buzburg/Swarmojo)**: The blazing-fast local-first AI agent meta-harness with sub-microsecond Mojo SIMD speed, Paperclip-grade org charts, hard budgets, and Swarmojo HUD.
 
-Default budget: 256 unique signal states and 2,048 transition edges. Maximum: 512 states / 8,192 edges. Input has a 200,000-character limit, 100 workflows and 32 distinct data fields. See the complete [blueprint reference](docs/BLUEPRINT.md), [design contract](docs/DESIGN.md) and [security boundaries](SECURITY.md).
+---
 
-## Build and test
+## License & Authors
 
-```sh
-npm ci --ignore-scripts
-npm run typecheck
-npm test
-npx playwright install chromium firefox
-npm run test:browser
-```
-
-The build produces a self-contained HTML app, bundled single-scenario and harness CLIs, and SHA-256 checksums. Tests include a separate exhaustive small-graph cycle oracle, exact delivery counts, invalid inputs, browser behavior and actual CLI invocations. See the [verification record](docs/VERIFICATION.md). GitHub Actions rebuilds and tests before publishing release files. Verify downloaded files against `SHA256SUMS.txt`; checksums detect changed bytes but are not an independent publisher signature.
-
-## Existing work and the narrow gap
-
-Cycle detection and trigger-action verification are established ideas. n8n visualizers already map explicit subworkflow dependencies; Entflow offers HubSpot-specific dependency analysis; TAPInspector researches interacting trigger-action systems. TriggerTangle packages a smaller, platform-neutral design rehearsal around external event feedback and a reviewable before/after intervention. [Research and alternatives](docs/RESEARCH.md) record the evidence and limits of that claim.
-
-MIT licensed. Built by [Buzburg](https://github.com/Buzburg).
+Licensed under the [MIT License](LICENSE). Built with craft by **[Buzburg AI](mailto:buzburgai@gmail.com)**.

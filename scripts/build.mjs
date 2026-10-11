@@ -14,6 +14,7 @@ let html = await readFile('src/index.html', 'utf8');
 for (const marker of ['<!-- CSP -->', '<!-- STYLE -->', '<!-- SCRIPT -->']) if (!html.includes(marker)) throw new Error(`Missing HTML build marker: ${marker}`);
 html = html.replace('<!-- CSP -->', () => `<meta http-equiv="Content-Security-Policy" content="${csp}">`).replace('<!-- STYLE -->', () => `<style>${css.code}</style>`).replace('<!-- SCRIPT -->', () => `<script>${script}</script>`).replace('<html lang="en">', () => `<!--\n${license}\n-->\n<html lang="en">`);
 await writeFile('dist/trigger-tangle.html', html);
+await writeFile('dist/agent-relay.html', html);
 await mkdir('dist/site', { recursive: true });
 await writeFile('dist/site/index.html', html);
 const demo = await build({ ...common, entryPoints: ['src/demo.ts'], format: 'iife' });
@@ -25,11 +26,14 @@ let demoHtml = await readFile('src/demo.html', 'utf8');
 for (const marker of ['<!-- CSP -->', '<!-- STYLE -->', '<!-- SCRIPT -->']) if (!demoHtml.includes(marker)) throw new Error(`Missing demo build marker: ${marker}`);
 demoHtml = demoHtml.replace('<!-- CSP -->', () => `<meta http-equiv="Content-Security-Policy" content="${demoCsp}">`).replace('<!-- STYLE -->', () => `<style>${demoCss.code}</style>`).replace('<!-- SCRIPT -->', () => `<script>${demoScript}</script>`).replace('<html lang="en">', () => `<!--\n${license}\n-->\n<html lang="en">`);
 await writeFile('dist/trigger-tangle-demo.html', demoHtml);
+await writeFile('dist/agent-relay-demo.html', demoHtml);
 await writeFile('dist/site/demo.html', demoHtml);
 await build({ entryPoints: ['src/cli.ts'], outfile: 'dist/trigger-tangle.mjs', bundle: true, platform: 'node', format: 'esm', target: 'node22', legalComments: 'inline', banner: { js: `/*\n${license}\n*/` } });
+await build({ entryPoints: ['src/cli.ts'], outfile: 'dist/agent-relay.mjs', bundle: true, platform: 'node', format: 'esm', target: 'node22', legalComments: 'inline', banner: { js: `/*\n${license}\n*/` } });
 await build({ entryPoints: ['src/harness-cli.ts'], outfile: 'dist/trigger-tangle-harness.mjs', bundle: true, platform: 'node', format: 'esm', target: 'node22', legalComments: 'inline', banner: { js: `/*\n${license}\n*/` } });
+await build({ entryPoints: ['src/harness-cli.ts'], outfile: 'dist/agent-relay-harness.mjs', bundle: true, platform: 'node', format: 'esm', target: 'node22', legalComments: 'inline', banner: { js: `/*\n${license}\n*/` } });
 const sums = [];
-for (const name of ['trigger-tangle.html', 'trigger-tangle-demo.html', 'trigger-tangle.mjs', 'trigger-tangle-harness.mjs']) {
+for (const name of ['agent-relay.html', 'agent-relay-demo.html', 'agent-relay.mjs', 'agent-relay-harness.mjs', 'trigger-tangle.html', 'trigger-tangle-demo.html', 'trigger-tangle.mjs', 'trigger-tangle-harness.mjs']) {
   const data = await readFile(`dist/${name}`); sums.push(`${createHash('sha256').update(data).digest('hex')}  ${name}`);
   console.log(`${name}: ${data.length.toLocaleString('en-US')} bytes`);
 }
