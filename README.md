@@ -53,13 +53,13 @@ The app never connects to your live accounts or runs live workflows. Blueprints,
 
 ```mermaid
 graph TD
-    Seed([Initial Trigger Seed: CRM Contact Updated]) --> W1[Workflow / Agent A: Copy Contact to Sheet]
-    W1 --> Event1[Event Emitted: Sheets Contact Updated]
-    Event1 --> W2[Workflow / Agent B: Copy Row to CRM]
-    W2 --> LoopCheck{Causal Cycle Check}
-    LoopCheck -- Without Field Guard --> Repeat[🔁 Infinite Repeating Cycle Witness Found (Exit 1)]
-    LoopCheck -- With Origin Guard --> Halted[🛡️ Guard Halts Propagation: Acyclic Convergence (Exit 0)]
-    Halted --> VerProof[📜 Export Cryptographic JSON & HTML Audit Report]
+    Seed(["Initial Trigger Seed: CRM Contact Updated"]) --> W1["Workflow / Agent A: Copy Contact to Sheet"]
+    W1 --> Event1["Event Emitted: Sheets Contact Updated"]
+    Event1 --> W2["Workflow / Agent B: Copy Row to CRM"]
+    W2 --> LoopCheck{"Causal Cycle Check"}
+    LoopCheck -- "Without Field Guard" --> Repeat["🔁 Infinite Repeating Cycle Witness Found (Exit 1)"]
+    LoopCheck -- "With Origin Guard" --> Halted["🛡️ Guard Halts Propagation: Acyclic Convergence (Exit 0)"]
+    Halted --> VerProof["📜 Export Cryptographic JSON & HTML Audit Report"]
 ```
 
 ---
