@@ -13,7 +13,7 @@ Agent Relay rehearses that cross-system interaction **before you connect real ac
 [![Tests: 109/109 Passing](https://img.shields.io/badge/Tests-109%2F109_Passing-brightgreen.svg)](tests/)
 [![Sister Project: Swarmojo](https://img.shields.io/badge/Sister_Project-Swarmojo-gold.svg)](https://github.com/Buzburg/Swarmojo)
 
-![Agent Relay showing a synthetic cross-workflow rehearsal](docs/screenshot.png)
+![Agent Relay showing a synthetic cross-workflow rehearsal](docs/agent_relay_screenshot.png)
 
 ---
 
