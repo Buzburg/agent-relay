@@ -8,7 +8,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   build:
-    if: github.repository == 'Buzburg/trigger-tangle' && github.ref == 'refs/heads/main'
+    if: github.repository == 'Buzburg/loop-guard' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
